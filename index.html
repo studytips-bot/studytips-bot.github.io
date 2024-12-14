@@ -144,6 +144,11 @@
 
             // ボタンが表示されている間はそのままで、訳表示後にボタン非表示にする
             setTimeout(() => {
+                // ボタンのクリックイベントを無効化して重複を防ぐ
+                correctButton.onclick = null;
+                incorrectButton.onclick = null;
+
+                // 正誤判定を追加
                 currentWordIndex++;
                 if (currentWordIndex < words.length) {
                     setTimeout(showWord, gapTime * 1000);
@@ -157,12 +162,18 @@
                 if (!correctAnswers.includes(words[currentWordIndex].word)) {
                     correctAnswers.push(words[currentWordIndex].word);
                 }
+                // クリック後、ボタンを無効にして重複を防ぐ
+                correctButton.onclick = null;
+                incorrectButton.onclick = null;
             };
 
             incorrectButton.onclick = function() {
                 if (!incorrectAnswers.includes(words[currentWordIndex].word)) {
                     incorrectAnswers.push(words[currentWordIndex].word);
                 }
+                // クリック後、ボタンを無効にして重複を防ぐ
+                correctButton.onclick = null;
+                incorrectButton.onclick = null;
             };
         }
 
