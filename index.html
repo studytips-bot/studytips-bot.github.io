@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>英単語テスト</title>
     <style>
-        /* ボディ全体の設定 */
         body {
             display: flex;
             justify-content: center;
@@ -14,24 +13,17 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            flex-direction: column; /* 縦に並べる */
+            flex-direction: column;
         }
-
-        /* 英単語の表示スタイル */
         #word {
-            font-size: 48px; /* 英単語の文字サイズを調整 */
-            text-align: center; /* 中央揃え */
-            margin-top: 100px; /* 上部に少し余白を追加 */
-            display: block; /* ブロック要素として表示 */
-            width: 100%; /* 幅100% */
-            text-align: center; /* 横方向の中央揃え */
+            font-size: 48px;
+            text-align: center;
+            margin-top: 100px;
             display: flex;
-            justify-content: center; /* 水平方向の中央揃え */
-            align-items: center; /* 垂直方向の中央揃え */
-            height: 200px; /* 英単語の高さを調整 */
+            justify-content: center;
+            align-items: center;
+            height: 200px;
         }
-
-        /* ボタンのスタイル */
         button {
             padding: 10px 20px;
             margin-top: 20px;
@@ -42,24 +34,18 @@
             cursor: pointer;
             border-radius: 5px;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
-        /* 設定用のスライダー */
         .slider {
             width: 80%;
             margin: 10px 0;
         }
-
-        /* 設定表示 */
         #settings {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
         #result {
             margin-top: 30px;
         }
@@ -103,9 +89,9 @@
             { word: "remain", translation: "ままでいる" }
         ];
 
-        let testTime = 2;  // テスト時間（秒）
-        let intervalTime = 2;  // 訳表示時間（秒）
-        let gapTime = 1;  // 間隔時間（秒）
+        let testTime = 2;
+        let intervalTime = 2;
+        let gapTime = 1;
         let currentWordIndex = 0;
         let correctAnswers = [];
         let incorrectAnswers = [];
@@ -126,13 +112,12 @@
             document.getElementById('gapDisplay').innerText = gapTime;
         });
 
-        // テスト開始ボタンの設定
         document.getElementById('startButton').addEventListener('click', function() {
             document.getElementById('settings').style.display = 'none';
             startTest();
         });
 
-        // テストの開始
+        // テスト開始
         function startTest() {
             showWord();
         }
@@ -167,13 +152,18 @@
                 }
             }, (testTime + intervalTime) * 1000);
 
-            correctButton.addEventListener('click', function() {
-                correctAnswers.push(words[currentWordIndex]);
-            });
+            // ボタンが押された場合、単語をリストに追加
+            correctButton.onclick = function() {
+                if (!correctAnswers.includes(words[currentWordIndex].word)) {
+                    correctAnswers.push(words[currentWordIndex].word);
+                }
+            };
 
-            incorrectButton.addEventListener('click', function() {
-                incorrectAnswers.push(words[currentWordIndex]);
-            });
+            incorrectButton.onclick = function() {
+                if (!incorrectAnswers.includes(words[currentWordIndex].word)) {
+                    incorrectAnswers.push(words[currentWordIndex].word);
+                }
+            };
         }
 
         // 結果の表示
@@ -182,11 +172,11 @@
             resultElement.innerHTML = `
                 <h3>できた単語</h3>
                 <ul>
-                    ${correctAnswers.map(word => `<li>${word.word}</li>`).join('')}
+                    ${correctAnswers.map(word => `<li>${word}</li>`).join('')}
                 </ul>
                 <h3>できなかった単語</h3>
                 <ul>
-                    ${incorrectAnswers.map(word => `<li>${word.word}</li>`).join('')}
+                    ${incorrectAnswers.map(word => `<li>${word}</li>`).join('')}
                 </ul>
             `;
         }
